@@ -1,4 +1,4 @@
-import { Outfit } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
@@ -13,7 +13,12 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500"] });
+const roboto = Roboto({
+  weight: ["400", "700"], // Specify desired weights (e.g., regular and bold)
+  subsets: ["latin"], // Specify desired subsets
+  variable: "--font-roboto", // Optional: define a CSS variable name
+  display: "swap", // Optional: control font loading behavior
+});
 
 export const metadata = {
   title: "Ilearnig solutions",
@@ -26,7 +31,7 @@ export default function RootLayout({ children }) {
       <html lang="en" suppressHydrationWarning>
         <body
           suppressHydrationWarning
-          className={`${outfit.className} antialiased text-gray-700`}
+          className={`${roboto.className} antialiased text-gray-700`}
         >
           <Toaster />
 

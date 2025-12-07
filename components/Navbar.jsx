@@ -16,7 +16,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Courses', href: '/all-products' },
-    { name: 'About Us', href: '/about-us' },
+    // { name: 'About Us', href: '/about-us' },
   ]
 
   return (
@@ -27,28 +27,7 @@ const Navbar = () => {
         src={assets.logo}
         alt="logo"
       />
-      {/* <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className="hover:text-gray-900 transition">
-          Home
-        </Link>
-        <Link href="/all-products" className="hover:text-gray-900 transition">
-          Courses
-        </Link>
-        <Link href="/about-us" className="hover:text-gray-900 transition">
-          About Us
-        </Link>
-        <Link href="/" className="hover:text-gray-900 transition">
-          Contact
-        </Link>
 
-        {
-          isSeller && <button
-            onClick={() => router.push('/seller')}
-            className="text-xs border px-4 py-1.5 rounded-full">
-            Seller Dashboard</button>
-        }
-
-      </div> */}
       {/* Center Links */}
       <div className="hidden md:flex items-center space-x-8">
         {navLinks.map(link => (
@@ -95,7 +74,7 @@ const Navbar = () => {
               <UserButton.Action label="My Orders" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
             </UserButton.MenuItems>
           </UserButton>
-        </> : <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition">
+        </> : <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition cursor-pointer hover:bg-gray-300 p-2 rounded">
           {/* <Image src={assets.user_icon} alt="user icon" /> */}
           Account
         </button>}
@@ -103,19 +82,21 @@ const Navbar = () => {
 
       <div className="flex items-center md:hidden gap-3">
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full cursor-pointer hover:shadow-lg ">Admin Dashboard</button>}
-        {user ? <>
-          <UserButton>
-            <UserButton.MenuItems>
-              <UserButton.Action label="Cart" labelIcon={<CartIcon />} onClick={() => router.push('/cart')} />
-            </UserButton.MenuItems>
-            <UserButton.MenuItems>
-              <UserButton.Action label="My Orders" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
-            </UserButton.MenuItems>
-          </UserButton>
-        </> : <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition">
-          <Image src={assets.user_icon} alt="user icon" />
-          Account
-        </button>}
+        {
+          user ? <>
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action label="Cart" labelIcon={<CartIcon />} onClick={() => router.push('/cart')} />
+              </UserButton.MenuItems>
+              <UserButton.MenuItems>
+                <UserButton.Action label="My Orders" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
+              </UserButton.MenuItems>
+            </UserButton>
+          </> : <button onClick={openSignIn} className="flex items-center gap-2 hover:text-gray-900 transition cursor-pointer">
+            <Image src={assets.user_icon} alt="user icon" />
+            Account
+          </button>
+        }
       </div>
     </nav>
   );
