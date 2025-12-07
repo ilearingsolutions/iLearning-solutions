@@ -8,10 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     await connectDB();
-
     const { userId } = getAuth(request);
-    const user = await User.findById(userId);
-    console.log("ser in", user);
     if (!userId) {
       console.log("No userId found");
       return NextResponse.json(
@@ -21,17 +18,14 @@ export async function POST(request) {
     }
 
     const { items, address } = await request.json();
+
     if (!address || !items || items.length === 0) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
         { status: 400 }
       );
     }
-    //calculate ammount using items
-    // const amount = items.reduce(async (acc, item) => {
-    //   const product = await Product.findById(item.product);
-    //   return (await acc) + product.offerPrice * item.quantity;
-    // }, 0);
+
     // Calculate amount using items (use for...of for async)
     let amount = 0;
     for (const item of items) {
@@ -52,33 +46,17 @@ export async function POST(request) {
         userId,
         items,
         address,
-        userEmail: user.email,
+        email,
         amount: amount + Math.floor(amount * 0.02),
         date: Date.now(),
       },
     });
 
-    // // ✅ create order with email
-    // const newOrder = await Order.create({
-    //   userId,
-    //   userEmail: user.email,
-    //   items,
-    //   address,
-    //   amount: amount + Math.floor(amount * 0.02),
-    //   status: "Order placed",
-    //   date: Date.now(),
-    // });
-
-    // // ✅ now safe to send Inngest event
-    // await inngest.send({
-    //   name: "order/created",
-    //   data: { ...newOrder.toObject() },
-    // });
-
     //  create user cart
-
+    const user = await User.findById(userId);
     user.cartItems = {};
     await user.save();
+
     return NextResponse.json(
       {
         success: true,

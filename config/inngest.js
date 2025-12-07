@@ -1,11 +1,11 @@
 import { Inngest } from "inngest";
-
 import User from "@/models/User";
 import Order from "@/models/Order";
 import connectDB from "./db";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "ilearningsolutions" });
+
 //ingest function to save user data to a database
 export const syncUserCreation = inngest.createFunction(
   { id: "sync-user-from-clerk" },
@@ -67,6 +67,7 @@ export const createUserOrder = inngest.createFunction(
     const orders = events.map((event) => {
       return {
         userId: event.data.userId,
+        email: event.data.userEmail,
         items: event.data.items,
         address: event.data.address,
         amount: event.data.amount,
